@@ -105,15 +105,15 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | --- | --- |
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
-| | *Insert your diagram here...* |
+| | ![Architecture Diagram](images/ArchitectureDiagram.png "Auditor - Musician") |
 |Question | Who is going to **send UDP datagrams** and **when**? |
-| | *Enter your response here...* |
+| | The Auditor app is going to periodically send UDP datagrams in a broadcast informing other apps where to contact it to start a listening instance |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
-| | *Enter your response here...* |
+| | The Musician apps will listen for UDP datagrams to know where to establish a TCP connection |
 |Question | What **payload** should we put in the UDP datagrams? |
-| | *Enter your response here...* |
+| | The payload should at least contain the IP address and port on which to contact the Auditor app |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | *Enter your response here...* |
+| | The Auditor app should have an array of Musicians to listen to, and new Musician instances will be appended to it. The Musician apps will have one (or more?) Auditors that they will "play music" to |
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -123,9 +123,9 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**?
 | | *Enter your response here...*
 |Question | What is **npm**?
-| | *Enter your response here...*
+| | **npm** is the node package manager, it allows developers and apps to install packages.
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?
-| | *Enter your response here...*
+| | **npm install** is the command used to install packages in a node.js app
 |Question | How can we use the `https://www.npmjs.com/` web site?
 | | *Enter your response here...*
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122?
