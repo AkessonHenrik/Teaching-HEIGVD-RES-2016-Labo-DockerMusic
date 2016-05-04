@@ -121,21 +121,21 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic
 | ---  | ---
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**?
-| | *Enter your response here...*
+| | Using the JSON.stringify() function
 |Question | What is **npm**?
 | | **npm** is the node package manager, it allows developers and apps to install packages.
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?
-| | **npm install** is the command used to install packages in a node.js app
+| | **npm install** is the command used to install packages in a node.js app and the '--save' flag additionnally saves the package in the dependencies folder
 |Question | How can we use the `https://www.npmjs.com/` web site?
-| | *Enter your response here...*
+| | We can browse the available packages for our projects.
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122?
-| | *Enter your response here...*
+| | We can use certain packages, such as **node-uuid**
 |Question | In Node.js, how can we execute a function on a **periodic** basis?
-| | *Enter your response here...*
+| | Using the setInterval function
 |Question | In Node.js, how can we **emit UDP datagrams**?
-| | *Enter your response here...*
+| | Once we have created a UDP socket, we can use the send() function
 |Question | In Node.js, how can we **access the command line arguments**?
-| | *Enter your response here...*
+| | The arguments are stored in **process.argv**, otherwise we can use the 'command-line-args' package
 
 
 ## Task 3: package the "musician" app in a Docker image
