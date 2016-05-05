@@ -1,0 +1,7 @@
+{
+  "name": "musician",
+  "version": "0.0.1",
+  "dependencies": {
+    "node-uuid": "^1.4.7"
+  }
+}

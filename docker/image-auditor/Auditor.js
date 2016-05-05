@@ -11,7 +11,7 @@ udpInfo = {
   'port': '9907'
 };
 tcpInfo = {
-  'ip':'239.255.22.5',
+  'ip':'127.0.0.1',
   'port':'2205'
 };
 function Auditor() {
@@ -20,16 +20,16 @@ function Auditor() {
     instrumentArray.forEach(function(instr) {
       var obj = {
         'uuid': instr.uuid,
-      'instrument': instr.instrument,
-      'activeSince': instr.activeSince
-    }
+        'instrument': instr.instrument,
+        'activeSince': instr.activeSince
+      }
       arr.push(obj)
     })
     socket.write(JSON.stringify(arr));
     socket.pipe(socket);
     socket.destroy();
   });
-  tcpServer.listen(2205, '127.0.0.1');
+  tcpServer.listen(tcpInfo.port, tcpInfo.ip);
 
   instrumentArray = [];
 
@@ -42,14 +42,13 @@ function Auditor() {
   s.on('message', function (msg, source) {
     var obj = JSON.parse(msg);
     var toAdd = true;
-    for (var i = 0; i < instrumentArray.length; i++) {
-      if (instrumentArray[i].uuid === obj.uuid) {
-        instrumentArray[i].lastActive = new Date();
-        console.log("Got: " + JSON.stringify(instrumentArray[i]));
+    instrumentArray.forEach(function(instr) {
+      if(instr.uuid === obj.uuid) {
+        instr.lastActive = new Date();
+        console.log("Got: " + JSON.stringify(instr));
         toAdd = false;
-        break;
       }
-    }
+    })
     if (toAdd) {
       obj.lastActive = new Date();
       obj.activeSince = obj.lastActive;
