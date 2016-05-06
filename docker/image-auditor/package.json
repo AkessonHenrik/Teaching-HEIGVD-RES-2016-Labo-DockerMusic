@@ -1,4 +1,7 @@
 {
   "name": "auditor",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "ip": "^1.1.2"
+  }
 }

@@ -2,18 +2,29 @@
 * Created by Henrik on 04.05.2016.
 */
 var net = require('net');
-
+var ip = require('ip');
 var dgram = require('dgram');
+// var ipaddress = '230.1.2.3'
+var ipaddress = ip.address();
+console.log(ipaddress)
 var udp4;
 var s = dgram.createSocket('udp4');
 udpInfo = {
-  'ip': '239.255.22.5',
+  'ip': ipaddress,
   'port': '9907'
 };
 tcpInfo = {
-  'ip':'127.0.0.1',
+  'ip': ipaddress,
   'port':'2205'
 };
+
+logEnabled = process.argv[2];
+
+function logToConsole(toLogg) {
+  if(logEnabled == "log") {
+    console.log(toLogg);
+  }
+}
 function Auditor() {
   var tcpServer = net.createServer(function(socket) {
     var arr = []
@@ -35,7 +46,7 @@ function Auditor() {
 
   var s = dgram.createSocket('udp4');
   s.bind(udpInfo.port, function () {
-    s.addMembership(udpInfo.ip);
+    // s.addMembership(udpInfo.ip);
   });
 
 
@@ -45,7 +56,7 @@ function Auditor() {
     instrumentArray.forEach(function(instr) {
       if(instr.uuid === obj.uuid) {
         instr.lastActive = new Date();
-        console.log("Got: " + JSON.stringify(instr));
+        logToConsole("Got: " + JSON.stringify(instr));
         toAdd = false;
       }
     })
@@ -53,7 +64,7 @@ function Auditor() {
       obj.lastActive = new Date();
       obj.activeSince = obj.lastActive;
       instrumentArray.push(obj);
-      console.log("Added new instrument: " + JSON.stringify(obj));
+      logToConsole("Added new instrument: " + JSON.stringify(obj));
     }
   });
 
@@ -62,7 +73,7 @@ function Auditor() {
       var d = new Date();
       if((d-instrument.lastActive)/1000 > 5) {
         instrumentArray.splice(instrumentArray.indexOf(instrument), 1);
-        console.log("Removed! " + instrumentArray)
+        logToConsole("Removed! " + instrumentArray)
       }
     })
   };

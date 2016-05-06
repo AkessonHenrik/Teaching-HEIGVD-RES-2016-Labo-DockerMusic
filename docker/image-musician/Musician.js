@@ -1,9 +1,11 @@
 /**
 * Created by Henrik on 04.05.2016.
 */
-
+var ip = require('ip');
 var dgram = require('dgram');
 var udp4;
+// var ipaddress = '230.1.2.3';
+var ipaddress = ip.address();
 var s = dgram.createSocket('udp4');
 var uuidpackage = require('node-uuid');
 var sounds = [
@@ -13,26 +15,30 @@ var sounds = [
   {'instr': 'violin', 'sound': 'gzi-gzi'},
   {'instr': 'drum', 'sound': 'boum-boum'}
 ];
-
-function Musician(instr) {
-  this.instrument = instr;
-  this.sound = "";
-  this.uuid = uuidpackage.v4();
-  for (var i = 0; i < sounds.length; i++) {
-    if (sounds[i].instr === instr) {
-      this.sound = sounds[i].sound;
-    }
+var logEnabled = process.argv[3];
+function logToConsole(toLogg) {
+  if(logEnabled == "log") {
+    console.log(toLogg);
   }
+}
+function Musician(instr) {
+  instrument = instr;
+  sound = "";
+  uuid = uuidpackage.v4();
+  sounds.forEach(function(snd) {
+    if(snd.instr == instrument)
+      sound = snd.sound
+  })
   Musician.prototype.play = function () {
     var o = {
-      'uuid': this.uuid,
-      'instrument': this.instrument,
-      'sound': this.sound
+      'uuid': uuid,
+      'instrument': instrument,
+      'sound': sound
     };
     var payload = JSON.stringify(o);
     var message = new Buffer(payload);
-    s.send(message, 0, message.length, 9907, "239.255.22.5", function () {
-      console.log("Playing: " + message);
+    s.send(message, 0, message.length, 9907, ipaddress, function () {
+      logToConsole("Playing: " + message);
     });
   }
   setInterval(this.play.bind(this), 1000);
