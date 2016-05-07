@@ -1,11 +1,15 @@
-FROM node:argon
-RUN mkdir -p /usr/src/auditor
-WORKDIR /usr/src/auditor
-COPY package.json /usr/src/auditor
+FROM centos:centos6
+RUN yum install -y epel-release
+RUN yum install -y nodejs npm
+RUN mkdir -p auditor
+COPY package.json /auditor
+WORKDIR /auditor
 RUN npm install
-COPY . /usr/src/auditor
-EXPOSE 8080
-CMD ["npm", "start"]
+COPY . /auditor
+EXPOSE 2205
+RUN ls
+#RUN node Auditor.js
+CMD ["node", "Auditor.js"]
 ##RUN npm install dgram
 ##RUN npm install node-uuid
-RUN node Auditor.js
+#RUN node Auditor.js

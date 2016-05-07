@@ -1,11 +1,12 @@
 FROM node:argon
-RUN mkdir -p /usr/src/musician
-WORKDIR /usr/src/musician
-COPY package.json /usr/src/musician
+RUN mkdir -p /musician
+WORKDIR /musician
+COPY package.json /musician
 RUN npm install
-COPY . /usr/src/musician
-EXPOSE 8080
+COPY . /musician
+EXPOSE 9907
+ENTRYPOINT ["./musician"]
 CMD ["npm", "start"]
 ##RUN npm install dgram
-##RUN npm install node-uuid
-RUN node Musician.js piano
+##RUN npm install node-uuidd
+CMD ["node", "Musician.js", "arg1"]
