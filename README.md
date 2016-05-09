@@ -143,15 +143,15 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic
 | ---  | ---
 |Question | How do we **define and build our own Docker image**?
-| | *Enter your response here...*
+| | By creating a Dockerfile which describes everything Docker needs to know about the image to create
 |Question | How can we use the `ENTRYPOINT` statement in our Dockerfile?
-| | *Enter your response here...*
+| | By writing "ENTRYPOINT .." in our Dockerfile, we can tell Docker where to start the program
 |Question | After building our Docker image, how do we use it to **run containers**?
-| | *Enter your response here...*
+| | Using the "**docker run -d {image name} {image args}**" command
 |Question | How do we get the list of all **running containers**?
-| | *Enter your response here...*
+| | With the command "**docker ps**"
 |Question | How do we **stop/kill** one running container?
-| | *Enter your response here...*
+| | Using "**docker kill {container id}**"
 |Question | How can we check that our running containers are effectively sending UDP datagrams?
 | | *Enter your response here...*
 
@@ -161,15 +161,15 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic
 | ---  | ---
 |Question | With Node.js, how can we listen for UDP datagrams in a multicast group?
+| | By creating a udp4 socket, binding it to an ip and port, and using the "on('message', ...)" method
+|Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**?
 | | *Enter your response here...*
-|Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**? 
+|Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?
 | | *Enter your response here...*
-|Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting? 
-| | *Enter your response here...*
-|Question | When and how do we **get rid of inactive players**? 
-| | *Enter your response here...*
-|Question | How do I implement a **simple TCP server** in Node.js? 
-| | *Enter your response here...*
+|Question | When and how do we **get rid of inactive players**?
+| | By using the **setInterval** function, we can check every second if the last datagram received by each instrument was less than 5 seconds ago in our case. If the last datagram we received from an instrument was more than 5 seconds ago, we remove it from the array of active instruments.
+|Question | How do I implement a **simple TCP server** in Node.js?
+| | With net.createServer(function(socket){}) and listen(port, ip)
 
 
 ## Task 5: package the "auditor" app in a Docker image
@@ -177,7 +177,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic
 | ---  | ---
 |Question | How do we validate that the whole system works, once we have built our Docker image?
-| | *Enter your response here...*
+| |First, we start an auditor container and some musician containers with different instruments so that we don't get confused. Then we can open a terminal and run "telnet {IP_ADDRESS} 2205". If we receive a correct array from the auditor, then it works. We can also stop a musician container, wait a few seconds, and run the telnet command again and see that the returned array will be one instrument shorter!
 
 
 ## Constraints
