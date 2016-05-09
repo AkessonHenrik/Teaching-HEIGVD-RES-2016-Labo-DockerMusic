@@ -1,12 +1,6 @@
-FROM node:argon
-RUN mkdir -p /musician
-WORKDIR /musician
-COPY package.json /musician
-RUN npm install
-COPY . /musician
+FROM node:5.3.0
+COPY ./ res
 EXPOSE 9907
-ENTRYPOINT ["./musician"]
-CMD ["npm", "start"]
-##RUN npm install dgram
-##RUN npm install node-uuidd
-CMD ["node", "Musician.js", "arg1"]
+RUN npm install node-uuid
+
+ENTRYPOINT ["node", "res/Musician.js"]

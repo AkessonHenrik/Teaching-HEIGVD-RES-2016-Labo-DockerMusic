@@ -1,31 +1,43 @@
 /**
 * Created by Henrik on 04.05.2016.
 */
+//docker rm $(docker ps -aq)
+//docker rm $(docker images -q)
+
+
 var net = require('net');
+
 var ip = require('ip');
-var dgram = require('dgram');
-// var ipaddress = '230.1.2.3'
 var ipaddress = ip.address();
-console.log(ipaddress)
-var udp4;
+console.log("IP = " + ipaddress)
+
+var dgram = require('dgram');
 var s = dgram.createSocket('udp4');
+
+var MULTICAST_ADDRESS = "239.255.22.5"
+
+var udp4;
+
 udpInfo = {
-  'ip': ipaddress,
+  'ip': MULTICAST_ADDRESS,
   'port': '9907'
 };
+
 tcpInfo = {
   'ip': ipaddress,
   'port':'2205'
 };
 
+//Will the application print what it's playing?
 logEnabled = process.argv[2];
-
 function logToConsole(toLogg) {
   if(logEnabled == "log") {
     console.log(toLogg);
   }
 }
+
 function Auditor() {
+
   var tcpServer = net.createServer(function(socket) {
     var arr = []
     instrumentArray.forEach(function(instr) {
@@ -46,7 +58,7 @@ function Auditor() {
 
   var s = dgram.createSocket('udp4');
   s.bind(udpInfo.port, function () {
-    // s.addMembership(udpInfo.ip);
+    s.addMembership(udpInfo.ip);
   });
 
 
@@ -73,7 +85,7 @@ function Auditor() {
       var d = new Date();
       if((d-instrument.lastActive)/1000 > 5) {
         instrumentArray.splice(instrumentArray.indexOf(instrument), 1);
-        logToConsole("Removed! " + instrumentArray)
+        logToConsole("Removed! Remaining: " + instrumentArray)
       }
     })
   };
