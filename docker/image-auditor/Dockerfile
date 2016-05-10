@@ -1,5 +1,4 @@
 FROM node:5.3.0
-RUN mkdir res
+MAINTAINER	Henrik Akesson
 COPY ./ res
-EXPOSE 9907
 ENTRYPOINT ["node", "res/Auditor.js"]
